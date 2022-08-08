@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Hackathon:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Hackathon</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Hackathon.war">
+      <element id="artifact" artifact-name="Hackathon:war exploded" />
+    </root>
+  </artifact>
+</component>

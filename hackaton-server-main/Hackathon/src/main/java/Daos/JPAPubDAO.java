@@ -1,0 +1,49 @@
+package Daos;
+
+import Model.Bed;
+import Model.District;
+import Model.Pub;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+@Repository
+public class JPAPubDAO extends GenericJpaDAO<Pub>{
+
+    public JPAPubDAO(Class<Pub> modelType) {
+        super(modelType);
+    }
+
+    public Pub getMatch(Integer price, District district) {
+
+
+
+        // 1 - get a CriteriaBuilder object from the EntityManager
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+
+        // 2 - create a new CriteriaQuery instance for the Customer entity
+        CriteriaQuery<Pub> criteriaQuery = builder.createQuery(Pub.class);
+
+        // 3 - get the root of the query, from where all navigation starts
+        Root<Pub> root = criteriaQuery.from(Pub.class);
+
+        // 4 - specify the item that is to be returned in the query result
+        criteriaQuery.select(root);
+
+        Predicate[] predicates = new Predicate[2];
+        predicates[0] = builder.equal(root.get("price"), price);
+        predicates[1] = builder.equal(root.get("district"), district);
+
+        criteriaQuery.select(root).where(predicates);
+
+
+
+        // 6 - create and execute a query using the criteria
+        return em.createQuery(criteriaQuery).getSingleResult();
+
+    }
+
+}
